@@ -1,0 +1,127 @@
+{% extends '_layouts/cp' %}
+{% includeCssResource "/auditr/css/style.css" %}
+{% includeJsResource "/auditr/js/index.js" %}
+
+{% set title = "Auditr" %}
+
+{% set content %}
+
+{% macro pl(count, single, plural) %}{{ count == 1 ? single : plural }}{% endmacro %}
+
+{% from _self import pl %}
+
+<div class="Section">
+  <h3 class="Section__header">Basic Info</h3>
+  <ul class="Section__list">
+    {% set info = craft.auditr.getInfo() %}
+    <li class="Section__list-item">{{ info.siteName }}</li>
+    <li class="Section__list-item">{{ info.siteUrl }}</li>
+  </ul>
+</div>
+
+<div class="Section">
+<h3 class="Section__header">Server</h3>
+  <ul class="Section__list">
+    {% set serverInfo = craft.auditr.getServerInfo() %}
+    <li class="Section__list-item">Software: {{ serverInfo.software }}</li>
+    <li class="Section__list-item">Operating System: {{ serverInfo.os }}</li>
+    <li class="Section__list-item">PHP Version: {{ serverInfo.phpVersion }}</li>
+    <li class="Section__list-item">Document Root: {{ serverInfo.documentRoot }}</li>
+    <li class="Section__list-item">Craft Version: {{ serverInfo.craftVersion }}</li>
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Sections</h3>
+  <ul class="Section__list">
+    {% set sectionTypes = craft.auditr.getSectionsByType() %}
+    {% for sectionType, sections in sectionTypes %}
+      <li class="Section__list-item">
+        <h4 class="Section__subheader">{{ sectionType }}</h4>
+        <ul class="Section__list Section__list--sub">
+          {% for section in sections %}
+            <li class="Section__list-item">{{ section.name }}
+              {% if sectionType != "Singles" %}
+                ({{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }})
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Plugins</h3>
+  <ul class="Section__list">
+    {% set plugins = craft.auditr.getPlugins() %}
+    {% for plugin in plugins %}
+      <li class="Section__list-item">{{ plugin.name }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Users</h3>
+  <ul class="Section__list">
+    {% set userGroups = craft.auditr.getUsers() %}
+    {% for groupName, users in userGroups %}
+      <h4 class="Section__subheader">{{ groupName }}</h4>
+      <ul class="Section__list Section__list--sub">
+        {% for user in users %}
+          <li class="Section__list-item">
+            {{ user.username }} {% if user.firstName and user.lastName %}({{ user.firstName }} {{ user.lastName }}){% endif %}
+          </li>
+        {% else %}
+          No data
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Entries</h3>
+  <ul class="Section__list">
+    {% set entryInfo = craft.auditr.getEntriesInfo() %}
+    <li class="Section__list-item">Count: {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by {{ entryInfo.authorsCount }} {{ pl(entryInfo.authorsCount, 'author', 'authors') }}</li>
+    <li class="Section__list-item">{{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }} </li>
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">.htaccess</h3>
+  <a data-toggle>Show / Hide</a>
+  <pre class="Section__mono">{{ craft.auditr.getHtaccess() }}</pre>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Routes</h3>
+  <table class="Section__table">
+    <thead>
+      <th>URL Parts</th>
+      <th>Template</th>
+    </thead>
+    <tbody>
+      {% set routes = craft.auditr.getRoutes() %}
+      {% for route in routes %}
+        <tr>
+          <td class="Section__table-cell">
+            {% for segment in route.urlParts %}
+              {% if segment is not iterable %}
+                {{ segment }}
+              {% else %}
+                <span class="Section__bubble">{{ segment[0] }}</span>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td class="Section__table-cell">{{ route.template }}</td>
+        </tr>
+      {% else %}
+        No routes
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endset %}

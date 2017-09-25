@@ -1,0 +1,54 @@
+.Section,
+.Section__list {
+  margin: 1em 0;
+}
+
+.Section__header,
+.Section__subheader {
+  color: #29323d
+}
+
+.Section__header {
+  border-bottom: 1px solid #CDCDCD;
+  font-size: 16px;
+  padding: .5em 0;
+}
+
+.Section__subheader {
+  font-size: 14px;
+}
+
+.Section__subheader,
+.Section__list {
+  margin-left: 5px;
+}
+
+.Section__list--sub {
+  margin-left: 10px;
+}
+
+[data-toggle] {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.Section__mono {
+  background: #EEEEEE;
+  display: none;
+  font-family: monospace;
+  padding: 1em;
+}
+
+.Section__mono.visible {
+  display: inline-block;
+}
+
+.Section__bubble {
+  background-color: #DEDEDE;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.Section__table-cell {
+  padding: 5px 5px 5px 0;
+}

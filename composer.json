@@ -1,0 +1,14 @@
+{
+	"name": "digitalsurgeons/auditr",
+	"description": "Audit your Craft CMS installation",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "Digital Surgeons",
+			"homepage": "https://www.digitalsurgeons.com/"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}
