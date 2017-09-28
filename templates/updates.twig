@@ -18,23 +18,35 @@
 
 <div class="Section">
   <h3 class="Section__header">Updates</h3>
-  {% set updates = craft.auditr.getUpdates %}
+  {% set updates = craft.auditr.getUpdates() %}
   <ul class="Section__list">
-    {% set appUpdate = updates.app  %}
-    <h3>Craft</h3>
-    <ul class="Section__list Section__list--sub">
-        <li class="Section__list-item">Current version: {{ appUpdate.localVersion }}</li>
-        <li class="Section__list-item">Latest version: {{ appUpdate.latestVersion }}</li>
-    </ul>
-    <h3>Plugins</h3>
-    {% set pluginUpdates = updates.plugins %}
-    {% for plugin in pluginUpdates %}
-      <h3>{{ plugin.displayName }}</h3>
-  {#     <ul class="Section__list Section__list--sub">
-          <li class="Section__list-item">Current version: {{ appUpdate.localVersion }}</li>
-          <li class="Section__list-item">Latest version: {{ appUpdate.latestVersion }}</li>
-      </ul> #}
-    {% endfor %}
+    <li class="Section__list-item">
+      <h3 class="Section__header">Craft</h3>
+      <ul class="Section__list--sub">
+        {% for update in updates.app.releases %}
+          <li class="Section__list-item">
+            <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
+            <div class="Section__paragraph">{{ update.notes|raw }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li class="Section__list-item">
+      <h3 class="Section__header">Plugins</h3>
+      <ul class="Section__list--sub">
+        {% for plugin in updates.plugins %}
+          {% if plugin.releases|length %}
+            <h3 class="Section__header">{{ plugin.displayName }}</h3>
+            {% for update in plugin.releases %}
+              <li class="Section__list-item">
+                <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
+                <div class="Section__paragraph">{{ update.notes|raw }}</div>
+              </li>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </li>
   </ul>
 </div>
 
