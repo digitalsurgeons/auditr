@@ -4,6 +4,13 @@
 
 {% set title = "Auditr" %}
 
+{% set tabs = {
+    info: { label: 'Info'|t, url: '' },
+    content: { label: 'Content'|t, url: '' },
+    plugins: { label: 'Plugins'|t, url: '' },
+    users: { label: 'Users'|t, url: '' }
+} %}
+
 {% set content %}
 
 {% macro pl(count, single, plural) %}{{ count == 1 ? single : plural }}{% endmacro %}
