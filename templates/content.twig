@@ -1,0 +1,81 @@
+{% extends '_layouts/cp' %}
+{% includeCssResource "/auditr/css/style.css" %}
+{% includeJsResource "/auditr/js/index.js" %}
+
+{% set title = "Auditr" %}
+
+{% set tabs = {
+    info: { label: 'Info'|t, url: url('auditr') },
+    content: { label: 'Content'|t, url: url('auditr/content') },
+    plugins: { label: 'Plugins'|t, url: url('auditr/plugins') },
+    users: { label: 'Users'|t, url: url('auditr/users') }
+} %}
+
+{% set selectedTab = 'content' %}
+
+{% set content %}
+
+{% macro pl(count, single, plural) %}{{ count == 1 ? single : plural }}{% endmacro %}
+
+{% from _self import pl %}
+
+<div class="Section">
+  <h3 class="Section__header">Sections</h3>
+  <ul class="Section__list">
+    {% set sectionTypes = craft.auditr.getSectionsByType() %}
+    {% for sectionType, sections in sectionTypes %}
+      <li class="Section__list-item">
+        <h4 class="Section__subheader">{{ sectionType }}</h4>
+        <ul class="Section__list Section__list--sub">
+          {% for section in sections %}
+            <li class="Section__list-item">{{ section.name }}
+              {% if sectionType != "Singles" %}
+                ({{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }})
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Entries</h3>
+  <ul class="Section__list">
+    {% set entryInfo = craft.auditr.getEntriesInfo() %}
+    <li class="Section__list-item">Count: {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by {{ entryInfo.authorsCount }} {{ pl(entryInfo.authorsCount, 'author', 'authors') }}</li>
+    <li class="Section__list-item">{{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }} </li>
+  </ul>
+</div>
+
+<div class="Section">
+  <h3 class="Section__header">Routes</h3>
+  <table class="Section__table">
+    <thead>
+      <th>URL Parts</th>
+      <th>Template</th>
+    </thead>
+    <tbody>
+      {% set routes = craft.auditr.getRoutes() %}
+      {% for route in routes %}
+        <tr>
+          <td class="Section__table-cell">
+            {% for segment in route.urlParts %}
+              {% if segment is not iterable %}
+                {{ segment }}
+              {% else %}
+                <span class="Section__bubble">{{ segment[0] }}</span>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td class="Section__table-cell">{{ route.template }}</td>
+        </tr>
+      {% else %}
+        No routes
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endset %}

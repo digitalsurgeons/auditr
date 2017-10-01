@@ -1,0 +1,28 @@
+{% extends '_layouts/cp' %}
+{% includeCssResource "/auditr/css/style.css" %}
+{% includeJsResource "/auditr/js/index.js" %}
+
+{% set title = "Auditr" %}
+
+{% set tabs = {
+    info: { label: 'Info'|t, url: url('auditr') },
+    content: { label: 'Content'|t, url: url('auditr/content') },
+    plugins: { label: 'Plugins'|t, url: url('auditr/plugins') },
+    users: { label: 'Users'|t, url: url('auditr/users') }
+} %}
+
+{% set selectedTab = 'plugins' %}
+
+{% set content %}
+
+<div class="Section">
+  <h3 class="Section__header">Plugins</h3>
+  <ul class="Section__list">
+    {% set plugins = craft.auditr.getPlugins() %}
+    {% for plugin in plugins %}
+      <li class="Section__list-item">{{ plugin.name }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endset %}
