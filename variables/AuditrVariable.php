@@ -93,7 +93,7 @@ class AuditrVariable
         $entryCountByAuthor = craft()->db->createCommand()
             ->select('COUNT(*) as count, u.username')
             ->from('entries e')
-            ->join('users u', 'u.id = e.authorId')
+            ->leftJoin('users u', 'u.id = e.authorId')
             ->group('u.username')
             ->order('count desc')
             ->queryAll();

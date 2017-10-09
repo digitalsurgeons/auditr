@@ -50,7 +50,7 @@
 
       <ul class="Section__list--sub">
         {% for key, author in entryInfo.entryCountByAuthor %}
-          <li>{{ author.username }}: {{ author.count }}</li>
+          <li>{{ author.username ?: 'null' }}: {{ author.count }}</li>
         {% endfor %}
       </ul>
     </li>
