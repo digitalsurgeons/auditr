@@ -44,8 +44,19 @@
   <h3 class="Section__header">Entries</h3>
   <ul class="Section__list">
     {% set entryInfo = craft.auditr.getEntriesInfo() %}
-    <li class="Section__list-item">Count: {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by {{ entryInfo.authorsCount }} {{ pl(entryInfo.authorsCount, 'author', 'authors') }}</li>
-    <li class="Section__list-item">{{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }} </li>
+    <li class="Section__list-item">
+      {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by
+      {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author', 'authors') }}
+
+      <ul class="Section__list--sub">
+        {% for key, author in entryInfo.entryCountByAuthor %}
+          <li>{{ author.username }}: {{ author.count }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li class="Section__list-item">
+      {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }}
+    </li>
   </ul>
 </div>
 

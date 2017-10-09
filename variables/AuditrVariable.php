@@ -90,10 +90,12 @@ class AuditrVariable
             ->from('entries')
             ->queryRow();
 
-        $authorsCount = craft()->db->createCommand()
-            ->select('COUNT(*) as count')
-            ->from('entries')
-            ->group('authorId')
+        $entryCountByAuthor = craft()->db->createCommand()
+            ->select('COUNT(*) as count, u.username')
+            ->from('entries e')
+            ->join('users u', 'u.id = e.authorId')
+            ->group('u.username')
+            ->order('count desc')
             ->queryAll();
 
         $draftsCount = craft()->db->createCommand()
@@ -103,7 +105,7 @@ class AuditrVariable
 
         return array(
             'count' => $entriesCount['count'],
-            'authorsCount' => count($authorsCount),
+            'entryCountByAuthor' => $entryCountByAuthor,
             'draftsCount' => count($draftsCount)
         );
     }
