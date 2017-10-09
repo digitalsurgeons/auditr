@@ -57,7 +57,12 @@
     <li class="Section__list-item">
       {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }}
     </li>
+    <li>
+      Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}
+    </li>
   </ul>
+
+
 </div>
 
 <div class="Section">

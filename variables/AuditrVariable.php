@@ -103,10 +103,18 @@ class AuditrVariable
             ->from('entrydrafts')
             ->queryRow();
 
+        $mostRecentEntry = craft()->db->createCommand()
+            ->select('dateCreated')
+            ->from('entries')
+            ->order('dateCreated desc')
+            ->limit(1)
+            ->queryRow();
+
         return array(
             'count' => $entriesCount['count'],
             'entryCountByAuthor' => $entryCountByAuthor,
-            'draftsCount' => count($draftsCount)
+            'draftsCount' => count($draftsCount),
+            'mostRecentEntry' => $mostRecentEntry
         );
     }
 
