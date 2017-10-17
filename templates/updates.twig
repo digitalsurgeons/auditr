@@ -12,18 +12,7 @@
     updates: { label: 'Updates'|t, url: url('auditr/updates') }
 } %}
 
-{% set selectedTab = 'plugins' %}
+{% set selectedTab = 'content' %}
 
 {% set content %}
-
-<div class="Section">
-  <h3 class="Section__header">Plugins</h3>
-  <ul class="Section__list">
-    {% set plugins = craft.auditr.getPlugins() %}
-    {% for plugin in plugins %}
-      <li class="Section__list-item">{{ plugin.name }}</li>
-    {% endfor %}
-  </ul>
-</div>
-
 {% endset %}
