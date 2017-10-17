@@ -15,8 +15,9 @@
 
 {% set content %}
 
-{% macro pl(count, single, plural) %}{{ count == 1 ? single : plural }}{% endmacro %}
-
+{% macro pl(count, single, plural) %}
+  {{ count == 1 ? single : plural|default(single ~ 's') }}
+{% endmacro %}
 {% from _self import pl %}
 
 <div class="Section">
@@ -46,7 +47,7 @@
     {% set entryInfo = craft.auditr.getEntriesInfo() %}
     <li class="Section__list-item">
       {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by
-      {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author', 'authors') }}
+      {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}
 
       <ul class="Section__list--sub">
         {% for key, author in entryInfo.entryCountByAuthor %}
@@ -55,7 +56,7 @@
       </ul>
     </li>
     <li class="Section__list-item">
-      {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft', 'drafts') }}
+      {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }}
     </li>
     <li>
       Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}
