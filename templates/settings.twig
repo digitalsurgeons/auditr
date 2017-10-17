@@ -1,0 +1,21 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    id: 'googleApiKey',
+    name: 'googleApiKey',
+    label: 'Google API Key' | t,
+    value: settings.googleApiKey,
+    first: true,
+    autofocus: true,
+    instructions: 'Your Google API key. If this is not set, you will not be able to see Google Page Insights' | t
+}) }}
+
+{{ forms.textField({
+    id: 'siteUrl',
+    name: 'siteUrl',
+    label: 'Site URL' | t,
+    value: settings.siteUrl,
+    first: true,
+    autofocus: true,
+    instructions: 'The URL to send to Google Insights. If this is not set, it will default to the Craft global site url' | t
+}) }}

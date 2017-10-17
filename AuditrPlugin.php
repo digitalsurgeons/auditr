@@ -172,10 +172,18 @@ class AuditrPlugin extends BasePlugin
     {
     }
 
-    public function registerSiteRoutes()
+    protected function defineSettings()
     {
         return array(
-            'actions/auditr/' => array('action' => 'auditr/auditr/index'),
+            'googleApiKey' => AttributeType::String,
+            'siteUrl'     => AttributeType::String
         );
     }
+
+    public function getSettingsHtml()
+    {
+       return craft()->templates->render('auditr/settings', array(
+           'settings' => $this->getSettings()
+       ));
+   }
 }
