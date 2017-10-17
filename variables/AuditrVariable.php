@@ -139,6 +139,19 @@ class AuditrVariable
         }, $query);
     }
 
+    public function getGlobals()
+    {
+        $globalSets = array();
+        foreach(craft()->globals->getAllSets() as $globalSet) {
+            $fieldLayoutFields = $globalSet->getFieldLayout()->getFields();
+            $globalSets[$globalSet['name']] = array();
+            foreach ($fieldLayoutFields as $fieldLayoutField) {
+                $globalSets[$globalSet['name']][] = craft()->fields->getFieldById($fieldLayoutField->fieldId);
+            }
+        }
+        return $globalSets;
+    }
+
     public function getUpdates()
     {
         return craft()->updates->getUpdates();
