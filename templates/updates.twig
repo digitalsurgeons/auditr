@@ -15,4 +15,27 @@
 {% set selectedTab = 'content' %}
 
 {% set content %}
+
+<div class="Section">
+  <h3 class="Section__header">Updates</h3>
+  {% set updates = craft.auditr.getUpdates %}
+  <ul class="Section__list">
+    {% set appUpdate = updates.app  %}
+    <h3>Craft</h3>
+    <ul class="Section__list Section__list--sub">
+        <li class="Section__list-item">Current version: {{ appUpdate.localVersion }}</li>
+        <li class="Section__list-item">Latest version: {{ appUpdate.latestVersion }}</li>
+    </ul>
+    <h3>Plugins</h3>
+    {% set pluginUpdates = updates.plugins %}
+    {% for plugin in pluginUpdates %}
+      <h3>{{ plugin.displayName }}</h3>
+  {#     <ul class="Section__list Section__list--sub">
+          <li class="Section__list-item">Current version: {{ appUpdate.localVersion }}</li>
+          <li class="Section__list-item">Latest version: {{ appUpdate.latestVersion }}</li>
+      </ul> #}
+    {% endfor %}
+  </ul>
+</div>
+
 {% endset %}

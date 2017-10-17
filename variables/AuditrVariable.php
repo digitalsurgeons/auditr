@@ -138,4 +138,9 @@ class AuditrVariable
             );
         }, $query);
     }
+
+    public function getUpdates()
+    {
+        return craft()->updates->getUpdates();
+    }
 }
