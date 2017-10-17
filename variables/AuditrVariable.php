@@ -3,6 +3,11 @@ namespace Craft;
 
 class AuditrVariable
 {
+    public function getSettings()
+    {
+        return craft()->plugins->getPlugin('auditr')->getSettings();
+    }
+
     public function getInfo()
     {
         $info = array(
