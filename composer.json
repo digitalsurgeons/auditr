@@ -9,6 +9,7 @@
 		}
 	],
 	"require": {
-		"composer/installers": "~1.0"
+		"composer/installers": "~1.0",
+		"spipu/html2pdf": "^5.0"
 	}
 }

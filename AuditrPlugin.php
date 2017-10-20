@@ -185,5 +185,12 @@ class AuditrPlugin extends BasePlugin
        return craft()->templates->render('auditr/settings', array(
            'settings' => $this->getSettings()
        ));
-   }
+    }
+
+    public function registerCpRoutes()
+    {
+        return [
+            'auditr/convert' => ['action' => 'auditr/convert']
+        ];
+    }
 }
