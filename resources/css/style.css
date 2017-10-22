@@ -50,6 +50,19 @@
   padding: 10px;
 }
 
+.Section__list-item--holder {
+  padding: 50px 0 30px;
+  border-bottom: solid 1px #ddd;
+}
+
+.Section__list-item--holder:first-of-type {
+  padding-top: 20px;
+}
+
+.Section__list-item--holder:last-of-type {
+  border-bottom: 0;
+}
+
 .Section__list-title {
   font-weight: bold;
   width: 160px;

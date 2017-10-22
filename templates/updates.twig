@@ -13,7 +13,7 @@
     pageSpeed: { label: 'Page Speed'|t, url: url('auditr/pageSpeed') }
 } %}
 
-{% set selectedTab = 'content' %}
+{% set selectedTab = 'updates' %}
 
 {% set content %}
 
@@ -21,25 +21,25 @@
   <h3 class="Section__header">Updates</h3>
   {% set updates = craft.auditr.getUpdates() %}
   <ul class="Section__list">
-    <li class="Section__list-item">
-      <h3 class="Section__header">Craft</h3>
-      <ul class="Section__list--sub">
+    <li class="Section__list-item Section__list-item--holder">
+      <h3 class="Section__subheader">Craft</h3>
+      <ul class="Section__list">
         {% for update in updates.app.releases %}
-          <li class="Section__list-item">
+          <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
             <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
             <div class="Section__paragraph">{{ update.notes|raw }}</div>
           </li>
         {% endfor %}
       </ul>
     </li>
-    <li class="Section__list-item">
-      <h3 class="Section__header">Plugins</h3>
-      <ul class="Section__list--sub">
+    <li class="Section__list-item Section__list-item--holder">
+      <h3 class="Section__subheader">Plugins</h3>
+      <ul class="Section__list">
         {% for plugin in updates.plugins %}
           {% if plugin.releases|length %}
             <h3 class="Section__header">{{ plugin.displayName }}</h3>
             {% for update in plugin.releases %}
-              <li class="Section__list-item">
+              <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
                 <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
                 <div class="Section__paragraph">{{ update.notes|raw }}</div>
               </li>
