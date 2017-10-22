@@ -1,3 +1,19 @@
+.Export {
+  background: #da5a47;
+  border-radius: 4px;
+  color: #fff;
+  display: inline-block;
+  margin: 20px 0 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.Export:hover {
+  background: #b94c3d;
+  text-decoration: none;
+}
+
 .Section * {
   box-sizing: border-box;
 }

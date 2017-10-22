@@ -18,6 +18,8 @@
 
 {% set content %}
 
+<a class="Export" href="{{ url('auditr/convert') }}">Export PDF</a>
+
 {% set userGroups = craft.auditr.getUsers() %}
 {% for groupName, users in userGroups %}
 <div class="Section">

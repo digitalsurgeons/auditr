@@ -23,6 +23,8 @@
 {% endmacro %}
 {% from _self import pl %}
 
+<a class="Export" href="{{ url('auditr/convert') }}">Export PDF</a>
+
 <div class="Section">
   <h3 class="Section__header">Entries</h3>
   {% set entryInfo = craft.auditr.getEntriesInfo() %}

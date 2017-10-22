@@ -17,6 +17,9 @@
 {% set selectedTab = 'pageSpeed' %}
 
 {% set content %}
+
+<a class="Export" href="{{ url('auditr/convert') }}">Export PDF</a>
+
 {% set settings = craft.auditr.getSettings() %}
 <div class="Section" >
   <h3 class="Section__header">Google Insights</h3>
