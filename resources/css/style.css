@@ -1,3 +1,11 @@
+.Section * {
+  box-sizing: border-box;
+}
+
+.Section {
+  padding-top: 20px;
+}
+
 .Section,
 .Section__list {
   margin: 1em 0;
@@ -5,22 +13,43 @@
 
 .Section__header,
 .Section__subheader {
-  color: #29323d
+  color: #29323d;
 }
 
 .Section__header {
-  border-bottom: 1px solid #CDCDCD;
+  border-bottom: 1px solid #cdcdcd;
   font-size: 16px;
-  padding: .5em 0;
+  padding: 0.5em 0;
 }
 
 .Section__subheader {
   font-size: 14px;
 }
 
-.Section__subheader,
 .Section__list {
-  margin-left: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Section__list-title,
+.Section__list-item {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
+
+.Section__list-title {
+  font-weight: bold;
+  width: 160px;
+}
+
+.Section__list-item {
+  flex: 0 calc(100% - 160px);
+}
+
+.Section__list-title--gray,
+.Section__list-item--gray {
+  background: #eee;
 }
 
 .Section__list--sub {
@@ -33,7 +62,7 @@
 }
 
 .Section__mono {
-  background: #EEEEEE;
+  background: #eeeeee;
   display: none;
   font-family: monospace;
   padding: 1em;
@@ -44,7 +73,7 @@
 }
 
 .Section__bubble {
-  background-color: #DEDEDE;
+  background-color: #dedede;
   border-radius: 10px;
   padding: 2px 8px;
 }

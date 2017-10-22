@@ -23,23 +23,30 @@
 
 <div class="Section">
   <h3 class="Section__header">Basic Info</h3>
-  <ul class="Section__list">
+  <dl class="Section__list">
     {% set info = craft.auditr.getInfo() %}
-    <li class="Section__list-item">{{ info.siteName }}</li>
-    <li class="Section__list-item">{{ info.siteUrl }}</li>
-  </ul>
+    <dt class="Section__list-title Section__list-title--gray">Site Name:</dt>
+    <dd class="Section__list-item Section__list-item--gray"> {{ info.siteName }}</dd>
+    <dt class="Section__list-title">Site URL:</dt>
+    <dd class="Section__list-item">{{ info.siteUrl }}</dd>
+  </dl>
 </div>
 
 <div class="Section">
 <h3 class="Section__header">Server</h3>
-  <ul class="Section__list">
+  <dl class="Section__list">
     {% set serverInfo = craft.auditr.getServerInfo() %}
-    <li class="Section__list-item">Software: {{ serverInfo.software }}</li>
-    <li class="Section__list-item">Operating System: {{ serverInfo.os }}</li>
-    <li class="Section__list-item">PHP Version: {{ serverInfo.phpVersion }}</li>
-    <li class="Section__list-item">Document Root: {{ serverInfo.documentRoot }}</li>
-    <li class="Section__list-item">Craft Version: {{ serverInfo.craftVersion }}</li>
-  </ul>
+    <dt class="Section__list-title Section__list-title--gray">Software:</dt>
+    <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.software }}</dd>
+    <dt class="Section__list-title">Operating System:</dt>
+    <dd class="Section__list-item">{{ serverInfo.os }}</dd>
+    <dt class="Section__list-title Section__list-title--gray">PHP Version:</dt>
+    <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.phpVersion }}</dd>
+    <dt class="Section__list-title">Document Root:</dt>
+    <dd class="Section__list-item">{{ serverInfo.documentRoot }}</dd>
+    <dt class="Section__list-title Section__list-title--gray">Craft Version:</dt>
+    <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.craftVersion }}</dd>
+  </dl>
 </div>
 
 <div class="Section">
