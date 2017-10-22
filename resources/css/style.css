@@ -37,12 +37,25 @@
   display: flex;
 }
 
+.Section__list--defs .Section__list-title {
+  font-weight: bold;
+  width: 160px;
+}
+
 .Section__list--defs .Section__list-item {
   flex: 0 calc(100% - 160px);
 }
 
-.Section__list--defs .Section__list-item--full {
+.Section__list--defs .Section__list-title--full {
   flex: 0 100%;
+}
+
+.Section__list--defs-large .Section__list-title {
+  width: 200px;
+}
+
+.Section__list--defs-large .Section__list-item {
+  flex: 0 calc(100% - 200px);
 }
 
 .Section__list-title,
@@ -61,11 +74,6 @@
 
 .Section__list-item--holder:last-of-type {
   border-bottom: 0;
-}
-
-.Section__list-title {
-  font-weight: bold;
-  width: 160px;
 }
 
 .Section__list-title--gray,

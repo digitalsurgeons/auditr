@@ -55,19 +55,4 @@
   <pre class="Section__mono">{{ craft.auditr.getHtaccess() }}</pre>
 </div>
 
-<div class="Section">
-  <h3 class="Section__header">Globals</h3>
-  {% set globalSets = craft.auditr.getGlobals() %}
-  <ul class="Section__list">
-    {% for set, fields in globalSets %}
-      <li class="Section__list-item">{{ set }}</li>
-      <ul class="Section__list Section__list--sub">
-        {% for field in fields %}
-          <li class="Section__list-item">{{ field.name }}</li>
-        {% endfor %}
-      </ul>
-    {% endfor %}
-  </ul>
-</div>
-
 {% endset %}

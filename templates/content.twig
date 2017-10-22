@@ -22,84 +22,70 @@
 {% endmacro %}
 {% from _self import pl %}
 
+{% set sectionTypes = craft.auditr.getSectionsByType() %}
+{% for sectionType, sections in sectionTypes %}
 <div class="Section">
-  <h3 class="Section__header">Sections</h3>
+  <h3 class="Section__header">{{ sectionType }}</h3>
+  <dl class="Section__list Section__list--defs">
+  {% for section in sections %}
+    <dt class="Section__list-title {% if sectionType == "Singles" %}Section__list-title--full{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+      {{ section.name }}
+    </dt>
+    {% if sectionType != "Singles" %}
+    <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        {{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }}
+    </dd>
+    {% endif %}
+  {% endfor %}
+  </dl>
+</div>
+{% endfor %}
+
+<div class="Section">
+  <h3 class="Section__header">Globals</h3>
+  {% set globalSets = craft.auditr.getGlobals() %}
   <ul class="Section__list">
-    {% set sectionTypes = craft.auditr.getSectionsByType() %}
-    {% for sectionType, sections in sectionTypes %}
-      <li class="Section__list-item Section__list-item--holder">
-        <h4 class="Section__subheader">{{ sectionType }}</h4>
-        <dl class="Section__list Section__list--defs">
-          {% for section in sections %}
-            <dt class="{% if sectionType == "Singles" %}Section__list-item Section__list-item--full{% else %}Section__list-title{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
-              {{ section.name }}
-            </dt>
-            {% if sectionType != "Singles" %}
-            <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
-                {{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }}
-            </dd>
-            {% endif %}
-          {% endfor %}
-        </dl>
-      </li>
+    {% for set, fields in globalSets %}
+      <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ set }}</li>
     {% endfor %}
   </ul>
 </div>
 
 <div class="Section">
   <h3 class="Section__header">Entries</h3>
-  <ul class="Section__list">
-    {% set entryInfo = craft.auditr.getEntriesInfo() %}
-    <li class="Section__list-item Section__list-item--holder">
-      {{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} by
-      {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}
-
-      <ul class="Section__list--sub">
-        {% for key, author in entryInfo.entryCountByAuthor %}
-          <li>{{ author.username ?: 'null' }}: {{ author.count }}</li>
-        {% endfor %}
-      </ul>
-    </li>
-    <li class="Section__list-item">
-      {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }}
-    </li>
-    <li>
-      Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}
-    </li>
-  </ul>
-
-
+  {% set entryInfo = craft.auditr.getEntriesInfo() %}
+  <p>{{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} and {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }} by
+  {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}</p>
+  <p>Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}</p>
+  <dl class="Section__list Section__list--defs">
+    {% for key, author in entryInfo.entryCountByAuthor %}
+      <dt class="Section__list-title {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.username ?: 'null' }}</dt>
+      <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.count }}</dd>
+    {% endfor %}
+  </dl>
 </div>
 
 <div class="Section">
   <h3 class="Section__header">Routes</h3>
-  <table class="Section__table">
-    <thead>
-      <tr>
-        <th>URL Parts</th>
-        <th>Template</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% set routes = craft.auditr.getRoutes() %}
-      {% for route in routes %}
-        <tr>
-          <td class="Section__table-cell">
-            {% for segment in route.urlParts %}
-              {% if segment is not iterable %}
-                {{ segment }}
-              {% else %}
-                <span class="Section__bubble">{{ segment[0] }}</span>
-              {% endif %}
-            {% endfor %}
-          </td>
-          <td class="Section__table-cell">{{ route.template }}</td>
-        </tr>
-      {% else %}
-        No routes
+  <dl class="Section__list Section__list--defs Section__list--defs-large">
+    {% set routes = craft.auditr.getRoutes() %}
+    {% for route in routes %}
+    <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
+      {% for segment in route.urlParts %}
+        {% if segment is not iterable %}
+          {{ segment }}
+        {% else %}
+          <span class="Section__bubble">{{ segment[0] }}</span>
+        {% endif %}
       {% endfor %}
-    </tbody>
-  </table>
+    </dt>
+    <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+      {{ route.template }}
+    </dd>
+    {% else %}
+      No routes
+    {% endfor %}
+  </dl>
 </div>
 
 {% endset %}

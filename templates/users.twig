@@ -17,28 +17,24 @@
 
 {% set content %}
 
+{% set userGroups = craft.auditr.getUsers() %}
+{% for groupName, users in userGroups %}
 <div class="Section">
-  <h3 class="Section__header">Users</h3>
-  <ul class="Section__list">
-    {% set userGroups = craft.auditr.getUsers() %}
-    {% for groupName, users in userGroups %}
-    <li class="Section__list-item Section__list-item--holder">
-      <h4 class="Section__subheader">{{ groupName }}</h4>
-      <dl class="Section__list Section__list--defs">
-        {% for user in users %}
-          <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
-            {% if user.firstName and user.lastName %}{{ user.firstName }} {{ user.lastName }}{% endif %}
-          </dt>
-          <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
-            {{ user.username }}
-          </dd>
-        {% else %}
-          No data
-        {% endfor %}
-      </dl>
-    </li>
+  <h3 class="Section__header">{{ groupName }}</h3>
+
+  <dl class="Section__list Section__list--defs">
+    {% for user in users %}
+      <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
+        {% if user.firstName and user.lastName %}{{ user.firstName }} {{ user.lastName }}{% endif %}
+      </dt>
+      <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        {{ user.username }}
+      </dd>
+    {% else %}
+      No data
     {% endfor %}
-  </ul>
+  </dl>
 </div>
+{% endfor %}
 
 {% endset %}
