@@ -14,28 +14,31 @@
     pageSpeed: { label: 'Page Speed'|t, url: url('auditr/pageSpeed') }
 } %}
 
-{% set selectedTab = 'users' %}
+{% set selectedTab = 'templates' %}
 
 {% set content %}
 
-{% set userGroups = craft.auditr.getUsers() %}
-{% for groupName, users in userGroups %}
 <div class="Section">
-  <h3 class="Section__header">{{ groupName }}</h3>
-
-  <dl class="Section__list Section__list--defs">
-    {% for user in users %}
-      <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
-        {% if user.firstName and user.lastName %}{{ user.firstName }} {{ user.lastName }}{% endif %}
-      </dt>
-      <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
-        {{ user.username }}
-      </dd>
+  <h3 class="Section__header">Routes</h3>
+  <dl class="Section__list Section__list--defs Section__list--defs-large">
+    {% set routes = craft.auditr.getRoutes() %}
+    {% for route in routes %}
+    <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
+      {% for segment in route.urlParts %}
+        {% if segment is not iterable %}
+          {{ segment }}
+        {% else %}
+          <span class="Section__bubble">{{ segment[0] }}</span>
+        {% endif %}
+      {% endfor %}
+    </dt>
+    <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+      {{ route.template }}
+    </dd>
     {% else %}
-      No data
+      No routes
     {% endfor %}
   </dl>
 </div>
-{% endfor %}
 
 {% endset %}
