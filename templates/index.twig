@@ -23,7 +23,7 @@
 
 <div class="Section">
   <h3 class="Section__header">Basic Info</h3>
-  <dl class="Section__list">
+  <dl class="Section__list Section__list--defs">
     {% set info = craft.auditr.getInfo() %}
     <dt class="Section__list-title Section__list-title--gray">Site Name:</dt>
     <dd class="Section__list-item Section__list-item--gray"> {{ info.siteName }}</dd>
@@ -34,7 +34,7 @@
 
 <div class="Section">
 <h3 class="Section__header">Server</h3>
-  <dl class="Section__list">
+  <dl class="Section__list Section__list--defs">
     {% set serverInfo = craft.auditr.getServerInfo() %}
     <dt class="Section__list-title Section__list-title--gray">Software:</dt>
     <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.software }}</dd>

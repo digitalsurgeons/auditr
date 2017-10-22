@@ -29,15 +29,18 @@
     {% for sectionType, sections in sectionTypes %}
       <li class="Section__list-item">
         <h4 class="Section__subheader">{{ sectionType }}</h4>
-        <ul class="Section__list Section__list--sub">
+        <dl class="Section__list Section__list--defs">
           {% for section in sections %}
-            <li class="Section__list-item">{{ section.name }}
-              {% if sectionType != "Singles" %}
-                ({{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }})
-              {% endif %}
-            </li>
+            <dt class="{% if sectionType == "Singles" %}Section__list-item Section__list-item--full{% else %}Section__list-title{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+              {{ section.name }}
+            </dt>
+            {% if sectionType != "Singles" %}
+            <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+                {{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }}
+            </dd>
+            {% endif %}
           {% endfor %}
-        </ul>
+        </dl>
       </li>
     {% endfor %}
   </ul>
