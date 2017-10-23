@@ -6,11 +6,6 @@ class AuditrController extends BaseController
 {
     protected $allowAnonymous = [];
 
-    public function __construct()
-    {
-        require __DIR__ . '/../vendor/autoload.php';
-    }
-
     public function actionConvert()
     {
         $html = $this->renderTemplate('auditr/export', array(), true);
