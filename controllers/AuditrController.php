@@ -13,6 +13,16 @@ class AuditrController extends BaseController
         $this->redirect('auditr');
     }
 
+    public function actionDownload()
+    {
+        $file = IOHelper::getFileContents(__DIR__ . '/../resources/Auditr.pdf');
+        HeaderHelper::setHeader([
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename=Auditr.pdf'
+        ]);
+        echo $file;
+    }
+
     private function _generatePDF($html)
     {
         craft()->tasks->createTask('Auditr','Generate PDF', ['html' => $html]);

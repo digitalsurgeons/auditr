@@ -190,7 +190,8 @@ class AuditrPlugin extends BasePlugin
     public function registerCpRoutes()
     {
         return [
-            'auditr/convert' => ['action' => 'auditr/convert']
+            'auditr/convert' => ['action' => 'auditr/convert'],
+            'auditr/download' => ['action' => 'auditr/download']
         ];
     }
 }
