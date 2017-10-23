@@ -6,7 +6,6 @@
 {% endmacro %}
 {% from _self import pl %}
 
-{#
   <div class="Section">
     <h3 class="Section__header">Sections</h3>
     <ul class="Section__list">
@@ -54,8 +53,10 @@
     <h3 class="Section__header">Routes</h3>
     <table class="Section__table">
       <thead>
-        <th>URL Parts</th>
-        <th>Template</th>
+        <tr>
+          <th>URL Parts</th>
+          <th>Template</th>
+        </tr>
       </thead>
       <tbody>
         {% set routes = craft.auditr.getRoutes() %}
@@ -144,39 +145,34 @@
   </div>
 
   <div class="Section">
-    <h3 class="Section__header">Updates</h3>
     {% set updates = craft.auditr.getUpdates() %}
-    <ul class="Section__list">
-      <li class="Section__list-item">
-        <h3 class="Section__header">Craft</h3>
-        <ul class="Section__list--sub">
-          {% for update in updates.app.releases %}
+    <h3 class="Section__header">Craft CMS Updates</h3>
+    <ul class="Section__list--sub">
+      {% for update in updates.app.releases %}
+        <li class="Section__list-item">
+          <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
+          <div class="Section__paragraph">{{ update.notes|raw }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="Section">
+    <h3 class="Section__header">Plugin Updates</h3>
+    <ul class="Section__list--sub">
+      {% for plugin in updates.plugins %}
+        {% if plugin.releases|length %}
+          <h3 class="Section__header">{{ plugin.displayName }}</h3>
+          {% for update in plugin.releases %}
             <li class="Section__list-item">
               <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
               <div class="Section__paragraph">{{ update.notes|raw }}</div>
             </li>
           {% endfor %}
-        </ul>
-      </li>
-      <li class="Section__list-item">
-        <h3 class="Section__header">Plugins</h3>
-        <ul class="Section__list--sub">
-          {% for plugin in updates.plugins %}
-            {% if plugin.releases|length %}
-              <h3 class="Section__header">{{ plugin.displayName }}</h3>
-              {% for update in plugin.releases %}
-                <li class="Section__list-item">
-                  <h4 class="Section__subheader">Version {{ update.version }}, released {{ update.date }}</h4>
-                  <div class="Section__paragraph">{{ update.notes|raw }}</div>
-                </li>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </li>
+        {% endif %}
+      {% endfor %}
     </ul>
   </div>
-#}
 
   <div class="Section">
     <h3 class="Section__header">Users</h3>

@@ -18,7 +18,11 @@
 
 {% set content %}
 
-<a class="Export" href="{{ url('auditr/convert') }}">Export PDF</a>
+<a class="Export" href="{{ url('auditr/convert') }}">Generate PDF</a>
+
+{% if craft.auditr.pdfExists %}
+  <a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
+{% endif %}
 
 {% set userGroups = craft.auditr.getUsers() %}
 {% for groupName, users in userGroups %}

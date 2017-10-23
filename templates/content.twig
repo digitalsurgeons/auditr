@@ -23,7 +23,11 @@
 {% endmacro %}
 {% from _self import pl %}
 
-<a class="Export" href="{{ url('auditr/convert') }}">Export PDF</a>
+<a class="Export" href="{{ url('auditr/convert') }}">Generate PDF</a>
+
+{% if craft.auditr.pdfExists %}
+  <a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
+{% endif %}
 
 <div class="Section">
   <h3 class="Section__header">Entries</h3>
