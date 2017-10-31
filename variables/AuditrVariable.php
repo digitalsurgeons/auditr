@@ -134,7 +134,11 @@ class AuditrVariable
 
     public function getHtaccess()
     {
-        return file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/.htaccess");
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/.htaccess")) {
+            return file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/.htaccess");
+        } else {
+            return $_SERVER['DOCUMENT_ROOT'] . "/.htaccess" . " does not exist";
+        }
     }
 
     public function getRoutes()
