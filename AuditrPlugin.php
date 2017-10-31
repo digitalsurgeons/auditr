@@ -180,11 +180,9 @@ class AuditrPlugin extends BasePlugin
         );
     }
 
-    public function getSettingsHtml()
+    public function getSettingsUrl()
     {
-       return craft()->templates->render('auditr/settings', array(
-           'settings' => $this->getSettings()
-       ));
+       return 'auditr/settings';
     }
 
     public function registerCpRoutes()
