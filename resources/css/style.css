@@ -154,3 +154,23 @@
 .Speed-score--good .Speed-score__score {
   background-color: #009a2d;
 }
+
+[data-spinner] {
+  animation: spin .75s linear infinite;
+  background: transparent;
+  border-radius: 50%;
+  border-top: 2px solid #da5a47;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

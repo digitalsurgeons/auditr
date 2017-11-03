@@ -31,7 +31,7 @@
   <h3 class="Section__header">Google PageSpeed Insights</h3>
   <div data-insights data-key="{{ settings.googleApiKey }}" data-url="{{ settings.siteUrl ?: siteUrl }}">
     {% if settings.googleApiKey %}
-      Loading...
+      <span data-spinner></span>
     {% else %}
       <a href="{{ url('auditr/settings') }}">
         Enter your Google API key to use this feature
