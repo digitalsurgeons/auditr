@@ -27,9 +27,9 @@
 {% endif %}
 
 {% set settings = craft.auditr.getSettings %}
-<div class="Section" >
-  <h3 class="Section__header">Google Insights</h3>
-  <p data-insights data-key="{{ settings.googleApiKey }}" data-url="{{ settings.siteUrl ?: siteUrl }}">
+<div class="Section Section--pageSpeed">
+  <h3 class="Section__header">Google PageSpeed Insights</h3>
+  <div data-insights data-key="{{ settings.googleApiKey }}" data-url="{{ settings.siteUrl ?: siteUrl }}">
     {% if settings.googleApiKey %}
       Loading...
     {% else %}
@@ -37,6 +37,6 @@
         Enter your Google API key to use this feature
       </a>
     {% endif %}
-  </p>
+  </div>
 </div>
 {% endset %}

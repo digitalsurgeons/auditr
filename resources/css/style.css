@@ -122,3 +122,35 @@
 .Section__table-cell {
   padding: 5px 5px 5px 0;
 }
+
+.Section__error {
+  color: #da5a47;
+}
+
+.Section--pageSpeed .Section__subheader {
+  border-bottom: 1px solid #29323d;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.Speed-score__score {
+  border-radius: 50%;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 24px;
+  line-height: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+.Speed-score--poor .Speed-score__score {
+  background-color: #da5a47;
+}
+
+.Speed-score--needsWork .Speed-score__score {
+  background-color: #fda100;
+}
+
+.Speed-score--good .Speed-score__score {
+  background-color: #009a2d;
+}
