@@ -47,6 +47,11 @@
   flex-wrap: wrap;
 }
 
+.Section__list--defs-list {
+  margin-bottom: 20px;
+  width: 75%;
+}
+
 .Section__list--defs .Section__list-title,
 .Section__list--defs .Section__list-item {
   align-items: center;
@@ -54,12 +59,28 @@
 }
 
 .Section__list--defs .Section__list-title {
-  font-weight: bold;
   width: 160px;
+}
+
+.Section__list--defs .Section__list-title,
+.Section__list--defs-list .Section__list-title {
+  font-weight: bold;
+}
+
+.Section__list--defs-list .Section__list-title {
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 5px;
 }
 
 .Section__list--defs .Section__list-item {
   flex: 0 calc(100% - 160px);
+}
+
+.Section__list--defs-list .Section__list-item {
+  padding: 5px;
 }
 
 .Section__list--defs .Section__list-title--full {
@@ -77,6 +98,11 @@
 .Section__list-title,
 .Section__list-item {
   padding: 10px;
+}
+
+.Section__list-icon {
+  margin: 0 5px 0 0;
+  width: 20px;
 }
 
 .Section__list-item--holder {
@@ -133,6 +159,10 @@
   padding-bottom: 2px;
 }
 
+.Speed-score {
+  padding: 20px 0;
+}
+
 .Speed-score__score {
   border-radius: 50%;
   color: #ffffff;
@@ -156,7 +186,7 @@
 }
 
 [data-spinner] {
-  animation: spin .75s linear infinite;
+  animation: spin 0.75s linear infinite;
   background: transparent;
   border-radius: 50%;
   border-top: 2px solid #da5a47;
