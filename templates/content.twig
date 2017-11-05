@@ -24,7 +24,7 @@
 {% endmacro %}
 {% from _self import pl %}
 
-
+<a class="Export" href="{{ url('auditr/export') }}">Open Audit</a>
 {% if craft.auditr.pdfExists %}
   <a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
   <a class="Export" href="{{ url('auditr/convert') }}">Regenerate PDF</a>
