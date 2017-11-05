@@ -1,6 +1,9 @@
-{% includeCssResource "/auditr/css/style.css" %}
-{% includeJsResource "/auditr/js/index.js" %}
-
+<html>
+<head>
+  <title>HI!</title>
+  {% includeCssResource "/auditr/css/style.css" %}
+</head>
+<body>
 {% macro pl(count, single, plural) %}
   {{ count == 1 ? single : plural|default(single ~ 's') }}
 {% endmacro %}
@@ -192,3 +195,5 @@
       {% endfor %}
     </ul>
   </div>
+</body>
+</html>
