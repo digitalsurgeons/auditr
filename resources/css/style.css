@@ -97,6 +97,7 @@
 
 .Section__list-title,
 .Section__list-item {
+  display: block;
   padding: 10px;
 }
 
