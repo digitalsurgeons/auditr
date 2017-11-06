@@ -127,9 +127,14 @@
     }
 
     .Section__bubble {
-      background-color: #dedede;
+      background-color: #eeeeee;
       border-radius: 10px;
+      margin: 0 3px;
       padding: 2px 8px;
+    }
+
+    .Section__list-title--gray .Section__bubble {
+      background: #ffffff;
     }
 
     .Section__table-cell {
@@ -294,6 +299,10 @@
     <div class="Section">
       <h2 class="Section__header">Routes</h2>
       <table class="Section__list Section__list--defs Section__list--defs-large">
+        <tr>
+          <th class="Section__list-title">URL Path</th>
+          <th class="Section__list-title">Template</th>
+        </tr>
         {% set routes = craft.auditr.getRoutes() %}
         {% for route in routes %}
         <tr><td class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">

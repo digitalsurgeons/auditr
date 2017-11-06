@@ -141,9 +141,14 @@
 }
 
 .Section__bubble {
-  background-color: #dedede;
+  background-color: #eeeeee;
   border-radius: 10px;
+  margin: 0 3px;
   padding: 2px 8px;
+}
+
+.Section__list-title--gray .Section__bubble {
+  background: #ffffff;
 }
 
 .Section__table-cell {
@@ -205,3 +210,5 @@
     transform: rotate(360deg);
   }
 }
+
+

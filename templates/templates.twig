@@ -24,6 +24,8 @@
 <div class="Section">
   <h3 class="Section__header">Routes</h3>
   <dl class="Section__list Section__list--defs Section__list--defs-large">
+    <dt class="Section__list-title">URL Path</dt>
+    <dd class="Section__list-item"><strong>Template</strong></dd>
     {% set routes = craft.auditr.getRoutes() %}
     {% for route in routes %}
     <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
