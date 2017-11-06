@@ -20,7 +20,6 @@
 {% set content %}
 
 <a class="Export" href="{{ url('auditr/export') }}">Open Audit</a>
-<a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
 
 {% set userGroups = craft.auditr.getUsers() %}
 {% for groupName, users in userGroups %}
