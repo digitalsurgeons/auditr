@@ -10,6 +10,6 @@
 	],
 	"require": {
 		"composer/installers": "~1.0",
-		"spipu/html2pdf": "^5.0"
+		"dompdf/dompdf": "^0.8.1"
 	}
 }
