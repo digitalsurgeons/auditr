@@ -20,12 +20,7 @@
 {% set content %}
 
 <a class="Export" href="{{ url('auditr/export') }}">Open Audit</a>
-{% if craft.auditr.pdfExists %}
-  <a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
-  <a class="Export" href="{{ url('auditr/convert') }}">Regenerate PDF</a>
-{% else %}
-  <a class="Export" href="{{ url('auditr/convert') }}">Generate PDF</a>
-{% endif %}
+<a class="Export" href="{{ url('auditr/download') }}">Download PDF</a>
 
 <div class="Section">
   <h3 class="Section__header">Plugins</h3>
