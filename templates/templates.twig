@@ -26,7 +26,7 @@
   <dl class="Section__list Section__list--defs Section__list--defs-large">
     <dt class="Section__list-title">URL Path</dt>
     <dd class="Section__list-item"><strong>Template</strong></dd>
-    {% set routes = craft.auditr.getRoutes() %}
+    {% set routes = craft.auditr.getRoutes %}
     {% for route in routes %}
     <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
       {% for segment in route.urlParts %}

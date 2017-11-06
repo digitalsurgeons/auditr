@@ -21,7 +21,7 @@
 
 <a class="Export" href="{{ url('auditr/export') }}">Open Audit</a>
 
-{% set userGroups = craft.auditr.getUsers() %}
+{% set userGroups = craft.auditr.getUsers %}
 {% for groupName, users in userGroups %}
 <div class="Section">
   <h3 class="Section__header">{{ groupName }}</h3>

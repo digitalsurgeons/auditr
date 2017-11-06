@@ -24,7 +24,7 @@
 <div class="Section">
   <h3 class="Section__header">Plugins</h3>
   <ul class="Section__list">
-    {% set plugins = craft.auditr.getPlugins() %}
+    {% set plugins = craft.auditr.getPlugins %}
     {% for plugin in plugins %}
       <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ plugin.name }}</li>
     {% endfor %}

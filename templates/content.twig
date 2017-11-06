@@ -28,7 +28,7 @@
 
 <div class="Section">
   <h3 class="Section__header">Entries</h3>
-  {% set entryInfo = craft.auditr.getEntriesInfo() %}
+  {% set entryInfo = craft.auditr.getEntriesInfo %}
   <p>{{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} and {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }} by
   {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}</p>
   <p>Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}</p>
@@ -40,7 +40,7 @@
   </dl>
 </div>
 
-{% set sectionTypes = craft.auditr.getSectionsByType() %}
+{% set sectionTypes = craft.auditr.getSectionsByType %}
 {% for sectionType, sections in sectionTypes %}
 <div class="Section">
   <h3 class="Section__header">{{ sectionType }}</h3>
@@ -61,7 +61,7 @@
 
 <div class="Section">
   <h3 class="Section__header">Globals</h3>
-  {% set globalSets = craft.auditr.getGlobals() %}
+  {% set globalSets = craft.auditr.getGlobals %}
   <ul class="Section__list">
     {% for set, fields in globalSets %}
       <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
