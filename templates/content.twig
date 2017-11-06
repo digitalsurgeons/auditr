@@ -65,7 +65,16 @@
   {% set globalSets = craft.auditr.getGlobals() %}
   <ul class="Section__list">
     {% for set, fields in globalSets %}
-      <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ set }}</li>
+      <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        <h3 class="Section__subheader">{{ set }}</h3>
+      </li>
+      <ul>
+        {% for field in fields %}
+          <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.parent.loop.index0) }}">
+            - {{ field }}
+          </li>
+        {% endfor %}
+      </ul>
     {% endfor %}
   </ul>
 </div>

@@ -1,7 +1,15 @@
 <html>
 <head>
-  <title>HI!</title>
+  <title>Auditr</title>
 <style>
+    table {
+      border-spacing: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
     .Export {
       background: #da5a47;
       border-radius: 4px;
@@ -46,20 +54,9 @@
       font-size: 14px;
     }
 
-    .Section__list--defs {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
     .Section__list--defs-list {
       margin-bottom: 20px;
       width: 75%;
-    }
-
-    .Section__list--defs .Section__list-title,
-    .Section__list--defs .Section__list-item {
-      align-items: center;
-      display: flex;
     }
 
     .Section__list--defs .Section__list-title {
@@ -72,36 +69,21 @@
     }
 
     .Section__list--defs-list .Section__list-title {
-      align-items: center;
-      display: flex;
       margin-right: 20px;
       margin-top: 20px;
       padding: 5px;
-    }
-
-    .Section__list--defs .Section__list-item {
-      flex: 0 calc(100% - 160px);
     }
 
     .Section__list--defs-list .Section__list-item {
       padding: 5px;
     }
 
-    .Section__list--defs .Section__list-title--full {
-      flex: 0 100%;
-    }
-
     .Section__list--defs-large .Section__list-title {
       width: 200px;
     }
 
-    .Section__list--defs-large .Section__list-item {
-      flex: 0 calc(100% - 200px);
-    }
-
     .Section__list-title,
     .Section__list-item {
-      display: block;
       padding: 10px;
     }
 
@@ -273,30 +255,34 @@
   <div class="Export-render__content">
     <div class="Section">
       <h2 class="Section__header">Basic Info</h2>
-      <dl class="Section__list Section__list--defs">
+      <table class="Section__list Section__list--defs">
         {% set info = craft.auditr.getInfo() %}
-        <dt class="Section__list-title Section__list-title--gray">Site Name:</dt>
-        <dd class="Section__list-item Section__list-item--gray"> {{ info.siteName }}</dd>
-        <dt class="Section__list-title">Site URL:</dt>
-        <dd class="Section__list-item">{{ info.siteUrl }}</dd>
-      </dl>
+        <tr>
+          <td class="Section__list-title Section__list-title--gray">Site Name:</td>
+          <td class="Section__list-item Section__list-item--gray"> {{ info.siteName }}</td>
+        </tr>
+        <tr>
+          <td class="Section__list-title">Site URL:</td>
+          <td class="Section__list-item">{{ info.siteUrl }}</td>
+        </tr>
+      </table>
     </div>
 
     <div class="Section">
     <h2 class="Section__header">Server</h2>
-      <dl class="Section__list Section__list--defs">
+      <table class="Section__list Section__list--defs">
         {% set serverInfo = craft.auditr.getServerInfo() %}
-        <dt class="Section__list-title Section__list-title--gray">Software:</dt>
-        <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.software }}</dd>
-        <dt class="Section__list-title">Operating System:</dt>
-        <dd class="Section__list-item">{{ serverInfo.os }}</dd>
-        <dt class="Section__list-title Section__list-title--gray">PHP Version:</dt>
-        <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.phpVersion }}</dd>
-        <dt class="Section__list-title">Document Root:</dt>
-        <dd class="Section__list-item">{{ serverInfo.documentRoot }}</dd>
-        <dt class="Section__list-title Section__list-title--gray">Craft Version:</dt>
-        <dd class="Section__list-item Section__list-item--gray">{{ serverInfo.craftVersion }}</dd>
-      </dl>
+        <tr><td class="Section__list-title Section__list-title--gray">Software:</td>
+        <td class="Section__list-item Section__list-item--gray">{{ serverInfo.software }}</td></tr>
+        <tr><td class="Section__list-title">Operating System:</td>
+        <td class="Section__list-item">{{ serverInfo.os }}</td></tr>
+        <tr><td class="Section__list-title Section__list-title--gray">PHP Version:</td>
+        <td class="Section__list-item Section__list-item--gray">{{ serverInfo.phpVersion }}</td></tr>
+        <tr><td class="Section__list-title">Document Root:</td>
+        <td class="Section__list-item">{{ serverInfo.documentRoot }}</td></tr>
+        <tr><td class="Section__list-title Section__list-title--gray">Craft Version:</td>
+        <td class="Section__list-item Section__list-item--gray">{{ serverInfo.craftVersion }}</td></tr>
+      </table>
     </div>
 
     <div class="Section">
@@ -306,10 +292,10 @@
 
     <div class="Section">
       <h2 class="Section__header">Routes</h2>
-      <dl class="Section__list Section__list--defs Section__list--defs-large">
+      <table class="Section__list Section__list--defs Section__list--defs-large">
         {% set routes = craft.auditr.getRoutes() %}
         {% for route in routes %}
-        <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
+        <tr><td class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
           {% for segment in route.urlParts %}
             {% if segment is not iterable %}
               {{ segment }}
@@ -317,14 +303,14 @@
               <span class="Section__bubble">{{ segment[0] }}</span>
             {% endif %}
           {% endfor %}
-        </dt>
-        <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        </td>
+        <td class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
           {{ route.template }}
-        </dd>
+        </td></tr>
         {% else %}
           No routes
         {% endfor %}
-      </dl>
+      </table>
     </div>
 
     <div class="Section">
@@ -333,39 +319,48 @@
       <p>{{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} and {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }} by
       {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}</p>
       <p>Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}</p>
-      <dl class="Section__list Section__list--defs">
+      <table class="Section__list Section__list--defs">
         {% for key, author in entryInfo.entryCountByAuthor %}
-          <dt class="Section__list-title {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.username ?: 'null' }}</dt>
-          <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.count }}</dd>
+          <tr><td class="Section__list-title {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.username ?: 'null' }}</td>
+          <td class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.count }}</td></tr>
         {% endfor %}
-      </dl>
+      </table>
     </div>
 
     {% set sectionTypes = craft.auditr.getSectionsByType() %}
     {% for sectionType, sections in sectionTypes %}
     <div class="Section">
       <h2 class="Section__header">{{ sectionType }}</h2>
-      <dl class="Section__list Section__list--defs">
+      <table class="Section__list Section__list--defs">
       {% for section in sections %}
-        <dt class="Section__list-title {% if sectionType == "Singles" %}Section__list-title--full{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        <tr><td class="Section__list-title {% if sectionType == "Singles" %}Section__list-title--full{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
           {{ section.name }}
-        </dt>
+        </td>
         {% if sectionType != "Singles" %}
-        <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        <td class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
             {{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }}
-        </dd>
+        </td></tr>
         {% endif %}
       {% endfor %}
-      </dl>
+      </table>
     </div>
     {% endfor %}
 
     <div class="Section">
-      <h2 class="Section__header">Globals</h2>
+      <h3 class="Section__header">Globals</h3>
       {% set globalSets = craft.auditr.getGlobals() %}
       <ul class="Section__list">
         {% for set, fields in globalSets %}
-          <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ set }}</li>
+          <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+            <h3 class="Section__subheader">{{ set }}</h3>
+          </li>
+          <ul>
+            {% for field in fields %}
+              <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.parent.loop.index0) }}">
+                - {{ field }}
+              </li>
+            {% endfor %}
+          </ul>
         {% endfor %}
       </ul>
     </div>
@@ -385,18 +380,18 @@
     <div class="Section">
       <h2 class="Section__header">{{ groupName }}</h2>
 
-      <dl class="Section__list Section__list--defs">
+      <table class="Section__list Section__list--defs">
         {% for user in users %}
-          <dt class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
+          <tr><td class="Section__list-title {{ cycle(['Section__list-title--gray', ''], loop.index0) }}">
             {% if user.firstName and user.lastName %}{{ user.firstName }} {{ user.lastName }}{% endif %}
-          </dt>
-          <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+          </td>
+          <td class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
             {{ user.username }}
-          </dd>
+          </td></tr>
         {% else %}
           No data
         {% endfor %}
-      </dl>
+      </table>
     </div>
     {% endfor %}
 
