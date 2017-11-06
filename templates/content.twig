@@ -67,13 +67,8 @@
       <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
         <h3 class="Section__subheader">{{ set }}</h3>
       </li>
-      <ul>
-        {% for field in fields %}
-          <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.parent.loop.index0) }}">
-            - {{ field }}
-          </li>
-        {% endfor %}
-      </ul>
+    {% else %}
+      No data
     {% endfor %}
   </ul>
 </div>
