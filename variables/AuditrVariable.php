@@ -181,6 +181,41 @@ class AuditrVariable
         return !!$commerce;
     }
 
+    public function getCommerceStats()
+    {
+        $customerCount = craft()->db->createCommand()
+            ->select('count(distinct email) as count')
+            ->from('commerce_customers')
+            ->queryScalar();
+
+        $orderCount = craft()->db->createCommand()
+            ->select('count(*) as count')
+            ->from('commerce_orders')
+            ->queryScalar();
+
+        $earliestOrder = craft()->db->createCommand()
+            ->select('dateCreated')
+            ->from('commerce_orders')
+            ->order('dateCreated ASC')
+            ->limit(1)
+            ->queryScalar();
+        $earliestOrder = (new DateTime($earliestOrder))->format('m/d/Y');
+
+        setlocale(LC_MONETARY, 'en_US');
+        $orderTotal = craft()->db->createCommand()
+            ->select('SUM(totalPrice)')
+            ->from('commerce_orders')
+            ->queryScalar();
+        $orderTotal = money_format('%n', $orderTotal);
+
+        return [
+            'Customer Count'         => $customerCount,
+            'Order Count'            => $orderCount,
+            'Date of Earliest Order' => $earliestOrder,
+            'Order Total'            => $orderTotal,
+        ];
+    }
+
     public function getCommerceProductTypes()
     {
         $productTypes = craft()->db->createCommand()
