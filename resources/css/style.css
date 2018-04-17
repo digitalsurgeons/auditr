@@ -18,10 +18,6 @@
   box-sizing: border-box;
 }
 
-.Section {
-  padding-top: 20px;
-}
-
 .Section,
 .Section__list {
   margin: 1em 0;
