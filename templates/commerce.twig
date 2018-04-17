@@ -21,7 +21,23 @@
 {% set content %}
 
 <div class="Section">
-  <h3 class="Section__header">Commerce</h3>
+  <h3 class="Section__header">Product Types</h3>
+  <dl class="Section__list Section__list--defs">
+    <dt class="Section__list-title">
+      Product Type
+    </dt>
+    <dd class="Section__list-item">
+      <strong>Product Count</strong>
+    </dd>
+    {% for type in craft.auditr.getCommerceProductTypes %}
+      <dt class="Section__list-title {% if loop.index0 is even %}Section__list-item--gray{% endif %}">
+        {{ type.name }}
+      </dt>
+      <dd class="Section__list-item {% if loop.index0 is even %}Section__list-item--gray{% endif %}">
+        {{ type.count }}
+      </dd>
+    {% endfor %}
+  </dl>
 </div>
 
 {% endset %}

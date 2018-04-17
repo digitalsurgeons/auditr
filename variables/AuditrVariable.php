@@ -180,4 +180,16 @@ class AuditrVariable
         $commerce = craft()->plugins->getPlugin('commerce');
         return !!$commerce;
     }
+
+    public function getCommerceProductTypes()
+    {
+        $productTypes = craft()->db->createCommand()
+            ->select('t.id, t.name, t.handle, count(*) AS count')
+            ->from('commerce_producttypes AS t')
+            ->leftJoin('commerce_products AS p', 'p.typeId = t.id')
+            ->group('t.id')
+            ->queryAll();
+
+        return $productTypes;
+    }
 }
