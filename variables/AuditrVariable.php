@@ -174,4 +174,10 @@ class AuditrVariable
     {
         return craft()->updates->getUpdates();
     }
+
+    public function isCommerceInstalled()
+    {
+        $commerce = craft()->plugins->getPlugin('commerce');
+        return !!$commerce;
+    }
 }
