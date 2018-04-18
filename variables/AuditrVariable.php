@@ -227,4 +227,15 @@ class AuditrVariable
 
         return $productTypes;
     }
+
+    public function commerceIsInstalled()
+    {
+        $commerce = craft()->plugins->getPlugin('commerce');
+
+        if ($commerce && $commerce->isInstalled && $commerce->isEnabled) {
+            return true;
+        }
+
+        return false;
+    }
 }
