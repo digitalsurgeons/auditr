@@ -1,0 +1,57 @@
+{% extends '_layouts/cp' %}
+
+
+{% set title = "Auditr Settings" %}
+
+{% set tabs = {
+    info:      { label: 'Info'|t, url: url('auditr') },
+    templates: { label: 'Templates'|t, url: url('auditr/templates') },
+    content:   { label: 'Content'|t, url: url('auditr/content') },
+    plugins:   { label: 'Plugins'|t, url: url('auditr/plugins') },
+    users:     { label: 'Users'|t, url: url('auditr/users') },
+    updates:   { label: 'Updates'|t, url: url('auditr/updates') },
+    pageSpeed: { label: 'Page Speed'|t, url: url('auditr/pageSpeed') },
+} %}
+
+{% if craft.auditr.commerceIsInstalled %}
+  {% set tabs = tabs|merge({
+    commerce:  { label: 'Commerce'|t, url: url('auditr/commerce') },
+  }) %}
+{% endif %}
+
+{% set tabs = tabs|merge({
+  settings:  { label: 'Settings'|t, url: url('auditr/settings')}
+}) %}
+
+{% set selectedTab = 'settings' %}
+
+{% set content %}
+    {% import "_includes/forms" as forms %}
+
+    {% set fullPageForm = true %}
+    {% set settings = craft.auditr.getSettings %}
+
+    <input type="hidden" name="action" value="plugins/savePluginSettings">
+    <input type="hidden" name="pluginClass" value="auditr">
+
+    {% namespace 'settings' %}
+        {{ forms.textField({
+            id: 'googleApiKey',
+            name: 'googleApiKey',
+            label: 'Google API Key' | t,
+            value: settings.googleApiKey,
+            first: true,
+            autofocus: true,
+            instructions: 'Your Google API key. If this is not set, you will not be able to see Google Page Insights' | t
+        }) }}
+
+        {{ forms.textField({
+            id: 'siteUrl',
+            name: 'siteUrl',
+            label: 'Site URL' | t,
+            value: settings.siteUrl,
+            first: true,
+            instructions: 'The URL to send to Google Insights. If this is not set, it will default to the Craft global site url' | t
+        }) }}
+    {% endnamespace %}
+{% endset %}

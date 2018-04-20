@@ -1,0 +1,83 @@
+{% extends '_layouts/cp' %}
+{% includeCssResource "/auditr/css/style.css" %}
+{% includeJsResource "/auditr/js/index.js" %}
+
+{% set title = "Auditr" %}
+
+{% set tabs = {
+    info:      { label: 'Info'|t, url: url('auditr') },
+    templates: { label: 'Templates'|t, url: url('auditr/templates') },
+    content:   { label: 'Content'|t, url: url('auditr/content') },
+    plugins:   { label: 'Plugins'|t, url: url('auditr/plugins') },
+    users:     { label: 'Users'|t, url: url('auditr/users') },
+    updates:   { label: 'Updates'|t, url: url('auditr/updates') },
+    pageSpeed: { label: 'Page Speed'|t, url: url('auditr/pageSpeed') },
+} %}
+
+{% if craft.auditr.commerceIsInstalled %}
+  {% set tabs = tabs|merge({
+    commerce:  { label: 'Commerce'|t, url: url('auditr/commerce') },
+  }) %}
+{% endif %}
+
+{% set tabs = tabs|merge({
+  settings:  { label: 'Settings'|t, url: url('auditr/settings')}
+}) %}
+
+{% set selectedTab = 'content' %}
+
+{% set content %}
+
+{% macro pl(count, single, plural) %}
+  {{ count == 1 ? single : plural|default(single ~ 's') }}
+{% endmacro %}
+{% from _self import pl %}
+
+<div class="Section">
+  <h3 class="Section__header">Entries</h3>
+  {% set entryInfo = craft.auditr.getEntriesInfo %}
+  <p>{{ entryInfo.count }} {{ pl(entryInfo.count, 'entry', 'entries') }} and {{ entryInfo.draftsCount }} {{ pl(entryInfo.draftsCount, 'draft') }} by
+  {{ entryInfo.entryCountByAuthor|length }} {{ pl(entryInfo.entryCountByAuthor|length, 'author') }}</p>
+  <p>Most recent entry: {{ entryInfo.mostRecentEntry.dateCreated|date('m/d/Y') }}</p>
+  <dl class="Section__list Section__list--defs">
+    {% for key, author in entryInfo.entryCountByAuthor %}
+      <dt class="Section__list-title {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.username ?: 'null' }}</dt>
+      <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">{{ author.count }}</dd>
+    {% endfor %}
+  </dl>
+</div>
+
+{% set sectionTypes = craft.auditr.getSectionsByType %}
+{% for sectionType, sections in sectionTypes %}
+<div class="Section">
+  <h3 class="Section__header">{{ sectionType }}</h3>
+  <dl class="Section__list Section__list--defs">
+  {% for section in sections %}
+    <dt class="Section__list-title {% if sectionType == "Singles" %}Section__list-title--full{% endif %} {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+      {{ section.name }}
+    </dt>
+    {% if sectionType != "Singles" %}
+    <dd class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        {{ section.entryCount }} {{ pl(section.entryCount, 'entry', 'entries') }}
+    </dd>
+    {% endif %}
+  {% endfor %}
+  </dl>
+</div>
+{% endfor %}
+
+<div class="Section">
+  <h3 class="Section__header">Globals</h3>
+  {% set globalSets = craft.auditr.getGlobals %}
+  <ul class="Section__list">
+    {% for set, fields in globalSets %}
+      <li class="Section__list-item {{ cycle(['Section__list-item--gray', ''], loop.index0) }}">
+        <h3 class="Section__subheader">{{ set }}</h3>
+      </li>
+    {% else %}
+      No data
+    {% endfor %}
+  </ul>
+</div>
+
+{% endset %}

@@ -1,0 +1,44 @@
+{% extends '_layouts/cp' %}
+{% includeCssResource "/auditr/css/style.css" %}
+{% includeJsResource "/auditr/js/index.js" %}
+
+{% set title = "Auditr" %}
+
+{% set tabs = {
+    info:      { label: 'Info'|t, url: url('auditr') },
+    templates: { label: 'Templates'|t, url: url('auditr/templates') },
+    content:   { label: 'Content'|t, url: url('auditr/content') },
+    plugins:   { label: 'Plugins'|t, url: url('auditr/plugins') },
+    users:     { label: 'Users'|t, url: url('auditr/users') },
+    updates:   { label: 'Updates'|t, url: url('auditr/updates') },
+    pageSpeed: { label: 'Page Speed'|t, url: url('auditr/pageSpeed') },
+} %}
+
+{% if craft.auditr.commerceIsInstalled %}
+  {% set tabs = tabs|merge({
+    commerce:  { label: 'Commerce'|t, url: url('auditr/commerce') },
+  }) %}
+{% endif %}
+
+{% set tabs = tabs|merge({
+  settings:  { label: 'Settings'|t, url: url('auditr/settings')}
+}) %}
+
+{% set selectedTab = 'pageSpeed' %}
+
+{% set content %}
+
+{% set settings = craft.auditr.getSettings %}
+<div class="Section Section--pageSpeed">
+  <h3 class="Section__header">Google PageSpeed Insights</h3>
+  <div data-insights data-key="{{ settings.googleApiKey }}" data-url="{{ settings.siteUrl ?: siteUrl }}">
+    {% if settings.googleApiKey %}
+      <span data-spinner></span>
+    {% else %}
+      <a href="{{ url('auditr/settings') }}">
+        Enter your Google API key to use this feature
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endset %}

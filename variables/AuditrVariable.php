@@ -1,8 +1,14 @@
 <?php
+
 namespace Craft;
 
 class AuditrVariable
 {
+    public function getSettings()
+    {
+        return craft()->plugins->getPlugin('auditr')->getSettings();
+    }
+
     public function getInfo()
     {
         $info = array(
@@ -90,10 +96,12 @@ class AuditrVariable
             ->from('entries')
             ->queryRow();
 
-        $authorsCount = craft()->db->createCommand()
-            ->select('COUNT(*) as count')
-            ->from('entries')
-            ->group('authorId')
+        $entryCountByAuthor = craft()->db->createCommand()
+            ->select('COUNT(*) as count, u.username')
+            ->from('entries e')
+            ->leftJoin('users u', 'u.id = e.authorId')
+            ->group('u.username')
+            ->order('count desc')
             ->queryAll();
 
         $draftsCount = craft()->db->createCommand()
@@ -101,16 +109,28 @@ class AuditrVariable
             ->from('entrydrafts')
             ->queryRow();
 
+        $mostRecentEntry = craft()->db->createCommand()
+            ->select('dateCreated')
+            ->from('entries')
+            ->order('dateCreated desc')
+            ->limit(1)
+            ->queryRow();
+
         return array(
             'count' => $entriesCount['count'],
-            'authorsCount' => count($authorsCount),
-            'draftsCount' => count($draftsCount)
+            'entryCountByAuthor' => $entryCountByAuthor,
+            'draftsCount' => count($draftsCount),
+            'mostRecentEntry' => $mostRecentEntry
         );
     }
 
     public function getHtaccess()
     {
-        return file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/.htaccess");
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/.htaccess")) {
+            return file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/.htaccess");
+        } else {
+            return $_SERVER['DOCUMENT_ROOT'] . "/.htaccess" . " does not exist";
+        }
     }
 
     public function getRoutes()
@@ -127,5 +147,87 @@ class AuditrVariable
                 'template' => $row['template']
             );
         }, $query);
+    }
+
+    public function getGlobals()
+    {
+        $globalSets = array();
+        foreach(craft()->globals->getAllSets() as $globalSet) {
+            $fieldLayoutFields = $globalSet->getFieldLayout()->getFields();
+            $globalSets[$globalSet['name']] = array();
+            foreach ($fieldLayoutFields as $fieldLayoutField) {
+                $globalSets[$globalSet['name']][] = craft()->fields->getFieldById($fieldLayoutField->fieldId);
+            }
+        }
+        return $globalSets;
+    }
+
+    public function getUpdates()
+    {
+        return craft()->updates->getUpdates();
+    }
+
+    public function isCommerceInstalled()
+    {
+        $commerce = craft()->plugins->getPlugin('commerce');
+        return !!$commerce;
+    }
+
+    public function getCommerceStats()
+    {
+        $customerCount = craft()->db->createCommand()
+            ->select('count(distinct email) as count')
+            ->from('commerce_customers')
+            ->queryScalar();
+
+        $orderCount = craft()->db->createCommand()
+            ->select('count(*) as count')
+            ->from('commerce_orders')
+            ->queryScalar();
+
+        $earliestOrder = craft()->db->createCommand()
+            ->select('dateCreated')
+            ->from('commerce_orders')
+            ->order('dateCreated ASC')
+            ->limit(1)
+            ->queryScalar();
+        $earliestOrder = (new DateTime($earliestOrder))->format('m/d/Y');
+
+        setlocale(LC_MONETARY, 'en_US');
+        $orderTotal = craft()->db->createCommand()
+            ->select('SUM(totalPrice)')
+            ->from('commerce_orders')
+            ->queryScalar();
+        $orderTotal = money_format('%n', $orderTotal);
+
+        return [
+            'Customer Count'         => $customerCount,
+            'Order Count'            => $orderCount,
+            'Date of Earliest Order' => $earliestOrder,
+            'Order Total'            => $orderTotal,
+        ];
+    }
+
+    public function getCommerceProductTypes()
+    {
+        $productTypes = craft()->db->createCommand()
+            ->select('t.id, t.name, t.handle, count(*) AS count')
+            ->from('commerce_producttypes AS t')
+            ->leftJoin('commerce_products AS p', 'p.typeId = t.id')
+            ->group('t.id')
+            ->queryAll();
+
+        return $productTypes;
+    }
+
+    public function commerceIsInstalled()
+    {
+        $commerce = craft()->plugins->getPlugin('commerce');
+
+        if ($commerce && $commerce->isInstalled && $commerce->isEnabled) {
+            return true;
+        }
+
+        return false;
     }
 }
