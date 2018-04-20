@@ -1,17 +1,9 @@
 <?php
+
 namespace Craft;
 
 class AuditrVariable
 {
-    public function pdfExists()
-    {
-        if (IOHelper::fileExists(__DIR__ . '/../resources/Auditr.pdf')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function getSettings()
     {
         return craft()->plugins->getPlugin('auditr')->getSettings();
