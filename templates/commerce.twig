@@ -1,4 +1,9 @@
 {% extends '_layouts/cp' %}
+
+{% if not craft.auditr.commerceIsInstalled %}
+  {% redirect url('auditr') %}
+{% endif %}
+
 {% includeCssResource "/auditr/css/style.css" %}
 {% includeJsResource "/auditr/js/index.js" %}
 
