@@ -2,7 +2,7 @@
 
 Audit your Craft CMS installation
 
-![Screenshot](resources/screenshots/plugin_logo.png)
+![Screenshot](resources/screenshots/index.jpg)
 
 ## Installation
 
@@ -18,20 +18,7 @@ Auditr works on Craft 2.4.x and Craft 2.5.x.
 
 ## Auditr Overview
 
--Insert text here-
+Auditr is a Craft CMS plugin intended to help get a handle on an existing Craft site. It can give you information about your channels and fields, users, plugins, server, and so on.
 
-## Configuring Auditr
-
--Insert text here-
-
-## Using Auditr
-
--Insert text here-
-
-## Auditr Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
 
 Brought to you by [Digital Surgeons](https://www.digitalsurgeons.com/)
